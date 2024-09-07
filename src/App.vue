@@ -19,7 +19,10 @@ const handleChange = (event) => {
   inputValue.value = nextValue;
 };
 const handleClickAddButton = () => {
-  todoList.value.push(inputValue.value);
+  const text = inputValue.value
+  todoList.value.push({
+    text: text, done: false
+  });
 };
 const handleClickDelButton = (index) => {
   todoList.value.splice(index, 1);
@@ -60,7 +63,7 @@ const handleClickDelButton = (index) => {
       <input type="checkbox" v-model="item.done" />
       <span :class="{ 'done-item': item.done }">{{ item.text }}</span>
       <div>
-        <button @click="handleClickUpdButton('index')">수정</button>
+        <!-- <button @click="handleClickUpdButton('index')">수정</button> -->
         <button @click="handleClickDelButton('index')">삭제</button>
       </div>
     </li>
