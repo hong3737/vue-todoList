@@ -1,12 +1,12 @@
 <template>
   <LoginPage v-if="!user" />
   <TodoList v-else :user="user"/>
-  <button v-if="user" @click="handleClickLogout" type="button">로그아웃</button>
+  <button v-if="user" @click="handleClickLogout" type="button">Logout</button>
 </template>
 
 <script setup>
-import LoginPage from './Login.vue';
-import TodoList from './TodoList.vue';
+import LoginPage from './components/Login.vue';
+import TodoList from './components/TodoList.vue';
 import { ref, onMounted } from 'vue';
 import { supabase } from './utils/supabase';
 
