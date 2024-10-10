@@ -15,7 +15,8 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@supabase/supabase-js": "^2.45.4",
     "vite-plugin-env-compatible": "^2.0.1",
-    "vue": "^3.4.38"
+    "vue": "^3.4.38",
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.3",

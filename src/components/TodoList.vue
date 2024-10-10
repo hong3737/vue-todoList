@@ -21,7 +21,7 @@
         {{ tab }}
       </button>
     </div>
-    <ul>
+    <draggable v-model="filteredTodos" :component-data="{tag: 'ul',type: 'transition-group',name: !drag ? 'drag-list' : null}"  @start="drag = true" @end="finishDrag()">
       <li v-for="todo in filteredTodos" :key="todo.id">
         <div class="todo-item">
           <input type="checkbox" @change="toggleTodo(todo.id)" :checked="todo.done"/>
@@ -52,13 +52,14 @@
           </button>
         </div>
       </li>
-    </ul>
+    </draggable>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue';
 import { supabase } from '../utils/supabase';
+
 defineProps({
   user: Object
 })
@@ -123,7 +124,7 @@ const toggleTodo = async (id: number) => {
 }
 
 async function getTodos() {
-  const { data, error } = await supabase.from('todos').select();
+  const { data, error } = await supabase.from('todos').select().order('done', { ascending: true }).order('order', { ascending: true });
   todos.value = data ?? [];
 }
 
@@ -141,7 +142,30 @@ const filteredTodos = computed(() => {
   }
 });
 
+let drag = false;
+const finishDrag = async () => {
+  drag=false;
+  // await supabase.from('todos').update({ text: newText }).eq('id', todo.id);
+  console.log(todos)
+  await getTodos();
+};
+
 onMounted(async () => {
   await getTodos();
 });
 </script>
+
+<style scoped>
+  .flip-list-move {
+    transition: transform 0.5s;
+  }
+
+  .no-move {
+    transition: transform 0s;
+  }
+
+  .ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+  }
+</style>
